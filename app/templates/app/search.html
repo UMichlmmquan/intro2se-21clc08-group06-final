@@ -1,0 +1,142 @@
+{% extends 'app/base.html'%}
+{% load static %}
+{% load pagination_tags %}
+
+
+{% block main-content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <!--Search header-->
+        <h5 class="mx-5 mt-5">
+          {% if searched %}
+              Searched for "{{ searched }}"
+          {% else %}
+              Searched for "{{ searched_cate }}"
+          {% endif %}
+          . Found {{ count }} results:
+      </h5>
+      
+
+      <form action ="" >
+      <div class="text-center fw-bold">
+            {% if messages %}
+              {% for message in messages %}
+                    {{ message }}
+              {% endfor %}
+            {% endif %}
+          </div>
+        <input type="hidden" name="category" value="{{category}}">
+        <input type="hidden" name="searched" value="{{ searched }}">
+        <input type="hidden" name="page" value="{{ posts.number }}">
+        <div class="container mb-5" >
+            <span class="caption"> Sort by : </span> 
+            <div class="mx-3 form-check form-check-inline"> <!--Search theo keyword--> <!--Search này là search default-->
+                {%if check %}
+                <input class="form-check-input" type="radio" name="sort" id="sort1" value = "relevancy">
+                {%else%}
+                <input class="form-check-input" type="radio" name="sort" id="sort1" value = "relevancy" checked>
+                {%endif%}
+                <label class="form-check-label" for="sort1">
+                  Relevancy
+                </label>
+            </div>
+            <div class="form-check form-check-inline"> <!--Search theo thời gian (ngày đăng)-->
+                {%if check%}
+                <input class="form-check-input" type="radio" name="sort" id="sort1" value = "postdate" checked>
+                {%else%}
+                <input class="form-check-input" type="radio" name="sort" id="sort1" value = "postdate">
+                {%endif%}
+                <label class="form-check-label" for="sort1">
+                  Post Date
+                </label>
+            </div>   
+            <div class="form-check-inline mx-5"> <!--Nút apply dùng để apply 1 trong 2 loại search trên-->
+                <button type="submit" class="btn btn-success btn-sm" name = 'apply' value ='applied'>Apply </button>
+            </div>
+        </div>
+    </form>
+
+        <!--từ home.html (dòng 26 đến 93 bên home.html)-->
+        <div class="container mt-5">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for post in posts %}
+                <div class="col ">
+                    <div class="card mt-4 mx-5 w-75">
+                        <a href="{% url 'post' post_id=post.id %}">
+                            {% if post.pic_url %}
+                            <img src="{{ post.pic_url.url }}" alt="{{ post.caption }}" style="object-fit:contain;width:400px;height:400px;" class="card-img-top-center img-fluid mx-auto d-block">
+                            {% else %}
+                            <img src="{% static 'app/image/logo.jpg' %}" alt="{{ post.caption }}" class="card-img-top img-fluid">
+                            {% endif %}
+                        </a>
+                        <div class="card-body">
+                            <a class="text-decoration-none" href="{% url 'post' post_id=post.id %}">
+                                <h5 class="card-title">{{ post.caption }}</h5>
+                            </a>
+                            <p class="card-text lh-sm">Company Name: {{ post.employer.company_name }}</p>
+                            <p class="card-text lh-sm">City: {{ post.city}}</p>
+                            <p class="card-text lh-sm">Field: {{ post.field }}</p>
+                            <p class="card-text lh-sm">Salary: {{ post.salary }}</p>
+                            <p class="card-text lh-sm">Working hours: {{ post.hour }}</p>
+                            <p class="card-text lh-sm">
+                                <small class="text-body-secondary">Posted {{ post.created_at|timesince }} ago by</small>
+                                <a href="#" class="text-decoration-none">{{ post.employer.user.username }}</a>
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="row justify-content-center mt-5">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+            {% if posts.has_previous %} 
+              <li class="page-item">
+                <a class="page-link" href="?{% url_replace page=1 searched=searched sort=sort apply=''%}">&laquo </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?{% url_replace page=posts.previous_page_number searched=searched sort=sort apply=''%}">Previous</a>
+              </li>
+            {%endif%}
+            {% if posts.paginator.num_pages > 10%}
+              <li class="page-item disabled"><a class="page-link" href="#">
+                Page {{posts.number}} of {{posts.paginator.num_pages}}</a></li>
+            {%else%}
+             {%for i in nums%}
+                {%if forloop.counter == posts.number%}
+                    <li class="page-item active"><a class="page-link" href="?{% url_replace page=posts.number searched=searched sort=sort apply=''%}">{{posts.number}}</a></li>
+                {%else%}
+                    <li class="page-item"><a class="page-link" href="?{% url_replace page=forloop.counter searched=searched sort=sort apply=''%}">{{forloop.counter}}</a></li>
+                {%endif%}
+             {%endfor%}
+            {%endif%}
+             {% if posts.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?{% url_replace page=posts.next_page_number searched=searched sort=sort apply=''%}">Next</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?{% url_replace page=posts.paginator.num_pages searched=searched sort=sort apply=''%}">&raquo </a>
+              </li>
+            {%endif%}
+            </ul>
+        </nav>
+        </div>
+        
+        <script src="" async defer></script>
+    </body>
+</html>
+
+
+{% endblock main-content%}

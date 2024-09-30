@@ -1,0 +1,72 @@
+{% extends 'app/base.html'%}
+{% load static %}
+{% load pagination_tags %}
+
+
+{% block main-content %}
+<div class="d-flex justify-content-center align-items-center h-100">
+  <div class="col-lg-6 col-xl-6">
+<div class="table-responsive small">
+    <table class="table table-striped table-sm text-center">
+      {% if dashboard %}
+      <div class="container">
+        <div class="row justify-content-center mt-5 mb-4 border-bottom">
+            <div class="col-md-10 col-sm-12 text-center">
+                <h1 class="display-10">DASHBOARD</h1>
+                {{hl}}
+            </div>
+        </div>
+      </div>
+        <thead>
+          <tr>
+            <th scope="col" class="col-sm-1">Order number</th>
+            <th scope="col">Caption</th>
+            <th scope="col">Name</th>
+            <th scope="col" class="col-sm-2">Applied time</th>
+            <th scope="col" class="col-sm-1">Status</th>
+            <th scope="col" class="col-sm-1"></th>
+            <th scope="col" class="col-sm-1"> Hightlight </th>
+          
+          </tr>
+        </thead>
+        <tbody>
+          {% for application in dashboard %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ application.caption }}</td>
+            <td>{{ application.user_name }}</td>
+            <td>{{ application.applied_time }}</td>
+            <td class="{% if application.status_E == 'PENDING' %}text-center fw-bold table-secondary{% elif application.status_E == 'ACCEPTED' %} text-center text-success fw-bold table-success{% else %} text-center text-danger fw-bold table-danger{% endif %}">
+              {{ application.status_E }}
+            <td><a href="{% url 'view_cv' application.id %}" class="btn btn-primary btn-sm col-sm-25">View CV</a></td>
+   
+            <form method="POST" action="">
+              {% csrf_token %}
+
+              {% if application.highlight or dashboard.highlight %}
+              <td><button type="submit" name="hl" value=application.id class="btn btn-lg mx-2"
+                style="background-color: transparent; border: none; padding: 0;">
+                    <i class="bi bi-star-fill bi-lg text-warning" style="color: #999;"></i>
+                </button></td>
+              {% else %}
+              <td><button type="submit" name="hl" value=application.id class="btn btn-lg mx-2"
+                style="background-color: transparent; border: none; padding: 0;">
+            <i class="bi bi-star bi-lg " style="color: #999;"></i>
+        </button></td>
+              {% endif %}
+
+          </form>
+            
+          </tr>
+          {% endfor %}
+        </tbody>
+        {% else %}
+          <p class="text-center fw-bold "><h3>No application history found.</h3></p>
+        {% endif %}
+    </table>
+  </div>
+</div>
+</div>
+        
+{% endblock main-content %}
+

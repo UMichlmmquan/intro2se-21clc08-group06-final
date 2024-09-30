@@ -1,0 +1,155 @@
+{% extends 'app/base.html'%}
+{% load static %}
+
+{% block main-content %}
+{% if not_owner_message %}
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ not_owner_message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% if messages %}
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-12">
+      {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-10 col-sm-12 text-center">
+                    <h1 class="display-10">Welcome to O.J.F.A</h1>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container mt-5">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                {% for post in posts %}
+                <div class="col ">
+                    <div class="card mt-4 mx-5 w-75">
+                        {% if post.is_hidden %}
+                            {% if user == post.employer.user %}
+                                
+                                    
+                                    <a href="{% url 'post' post_id=post.id %}">
+                                        {% if post.pic_url %}
+                                        <img src="{{ post.pic_url.url }}" alt="{{ post.caption }}" style="object-fit:contain;width:400px;height:400px;"class="card-img-top img-fluid mx-auto d-block">
+                                        {% else %}
+                                        <img src="{% static 'app/image/logo.jpg' %}" alt="{{ post.caption }}" style="object-fit:contain;width:400px;height:400px;"class="card-img-top img-fluid mx-auto d-block">
+                                        {% endif %}
+                                    </a>
+                                    <div class="card-body">
+                                        <a class="text-decoration-none" href="{% url 'post' post_id=post.id %}">
+                                            <h5 class="card-title">{{ post.caption }}</h5>
+                                        </a>
+                                        <p class="card-text lh-sm">Company Name: {{ post.employer.company_name }}</p>
+                                        <p class="card-text lh-sm">City: {{ post.city}}</p>
+                                        <p class="card-text lh-sm">Field: {{ post.field }}</p>
+                                        <p class="card-text lh-sm">Salary: {{ post.salary }}</p>
+                                        <p class="card-text lh-sm">Working hours: {{ post.hour }}</p>
+                                        <p class="card-text lh-sm">
+                                            <small class="text-body-secondary">Posted {{ post.created_at|timesince }} ago by</small>
+                                            <a href="#" class="text-decoration-none">{{ post.employer.user.username }}</a>
+                                        </p>
+            
+                                    </div>
+                                
+                            {% endif %}
+                        {% else %}
+                            
+                            <a href="{% url 'post' post_id=post.id %}">
+                                {% if post.pic_url %}
+                                <img src="{{ post.pic_url.url }}" alt="{{ post.caption }}" style="object-fit:contain;width:400px;height:400px;" class="card-img-top-center img-fluid mx-auto d-block">
+                                {% else %}
+                                <img src="{% static 'app/image/logo.jpg' %}" alt="{{ post.caption }}"style="object-fit:contain;width:400px;height:400px;"class="card-img-top img-fluid mx-auto d-block">
+                                {% endif %}
+                            </a>
+                            <div class="card-body">
+                                <a class="text-decoration-none" href="{% url 'post' post_id=post.id %}">
+                                    <h5 class="card-title">{{ post.caption }}</h5>
+                                </a>
+                                <p class="card-text lh-sm">Company Name: {{ post.employer.company_name }}</p>
+                                <p class="card-text lh-sm">City: {{ post.city}}</p>
+                                <p class="card-text lh-sm">Field: {{ post.field }}</p>
+                                <p class="card-text lh-sm">Salary: {{ post.salary }}</p>
+                                <p class="card-text lh-sm">Working hours: {{ post.hour }}</p>
+                                <p class="card-text lh-sm">
+                                    <small class="text-body-secondary">Posted {{ post.created_at|timesince }} ago by</small>
+                                    <a href="{% url 'profile' username=post.employer.user.username %}" class="text-decoration-none">{{ post.employer.user.username }}</a>
+                                </p>
+
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        
+        <div class="justify-content-center mt-5">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+            {% if posts.has_previous %} 
+              <li class="page-item">
+                <a class="page-link" href="?page=1">&laquo </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{posts.previous_page_number}}">Previous</a>
+              </li>
+            {%endif%}
+            {% if posts.paginator.num_pages > 10%}
+              <li class="page-item disabled"><a class="page-link" href="#">
+                Page {{posts.number}} of {{posts.paginator.num_pages}}</a></li>
+            {%else%}
+             {%for i in nums%}
+                {%if forloop.counter == posts.number%}
+                    <li class="page-item active"><a class="page-link" href="?page={{posts.number}}">{{posts.number}}</a></li>
+                {%else%}
+                    <li class="page-item"><a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a></li>
+                {%endif%}
+             {%endfor%}
+            {%endif%}
+             {% if posts.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{posts.next_page_number}}">Next</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{posts.paginator.num_pages}}">&raquo </a>
+              </li>
+            {%endif%}
+            </ul>
+        </nav>
+        </div>
+        
+        <script src="" async defer></script>
+    </body>
+</html>
+
+{% endblock main-content %}

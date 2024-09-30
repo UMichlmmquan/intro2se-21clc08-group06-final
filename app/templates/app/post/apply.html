@@ -1,0 +1,150 @@
+{% extends 'app/base.html'%}
+{% load static %}
+
+{% block main-content %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+  </head>
+  
+  <body class = "bg-body-tertiary">
+    <div class = "container">
+        <main>
+            <div class="py-5 text-center">
+                <img class="d-block mx-auto mb-4" src="{% static 'app/image/apply_icon.png' %}" alt="" width="200" height="200">
+                <h2>CV FORM</h2>
+            </div>
+
+            <div class="text-center fw-bold">
+              {% if messages %}
+                  {% for message in messages %}
+                      <div class="alert alert-danger">{{ message }}</div>
+                  {% endfor %}
+              {% endif %}
+            </div>
+
+            <div class = "row g-5">
+              <h4 class="mb-0">Basic</h4>
+                <form class="needs-validation" novalidate="" method="POST" action="">
+                  {% csrf_token %}
+                    <!-- Include the company_name and job_applied fields as hidden inputs -->
+                    <input type="hidden" name="company_name" value="{{ post.company_name }}">
+                    <input type="hidden" name="job_applied" value="{{ post.job }}">
+            
+                    <div class="row g-3">
+                      <div class="col-sm-5">
+                        <label for="firstName" class="form-label">Full name :  </label>
+                        {{ job_finder.full_name }}
+                      </div>
+          
+                      {% comment %} <div class="col-sm-4">
+                        <label for="lastName" class="form-label">Last name : </label>
+                      </div> {% endcomment %}
+                      
+                      <div class="col-sm-3">
+                        <label for="lastName" class="form-label">Gender : </label>
+                        {{ job_finder.gender }}
+                      </div>
+
+                      <div class="col-sm-9">
+                        <label for="address" class="form-label">Address : </label>
+                        {{ job_finder.address }}
+                      </div>
+
+                      <div class="col-sm-3">
+                        <label for="lastName" class="form-label">DOB : </label>
+                        {{ job_finder.date_of_birth }}
+                      </div>
+                      
+                      <div class=" col-sm-6 d-flex flex-row align-items-center">
+                        <div class="form-outline flex-fill mb-0">
+                            <label for="">Experience</label>
+                            {% comment %} <textarea class="form-control" placeholder="Briefly write about your experience" id="floatingTextarea2" style="height: 100px" name="intro" ></textarea>                                {% endcomment %}
+                            {{ form.experience }}
+                        </div>
+                      </div>
+
+                      <div class=" col-sm-6 d-flex flex-row align-items-center">
+                        <div class="form-outline flex-fill mb-0">
+                            <label for="">Short introduction</label>
+                            {% comment %} <textarea class="form-control" placeholder="Briefly introduce yourself" id="floatingTextarea2" style="height: 100px" name="intro" ></textarea>                                {% endcomment %}
+                            {{ form.introduction }}
+                        </div>
+                      </div>
+
+                      <div class=" col-sm-6 d-flex flex-row align-items-center">
+                        <div class="form-outline flex-fill mb-0">
+                            <label for="">Education</label>
+                            {% comment %} <textarea class="form-control" placeholder="Briefly write about your education" id="floatingTextarea2" style="height: 100px" name="intro" ></textarea>                                {% endcomment %}
+                            {{ form.education }}
+                        </div>
+                      </div>
+
+                      <div class=" col-sm-6 d-flex flex-row align-items-center">
+                        <div class="form-outline flex-fill mb-0">
+                            <label for="">Interests</label>
+                            {% comment %} <textarea class="form-control" placeholder="Briefly write about your interests" id="floatingTextarea2" style="height: 100px" name="intro" ></textarea>                                {% endcomment %}
+                            {{ form.interest }}
+                        </div>
+                      </div>
+
+                      <div class=" col-sm-6 d-flex flex-row align-items-center">
+                        <div class="form-outline flex-fill mb-0">
+                            <label for="">Foreign Languages</label>
+                            {% comment %} <textarea class="form-control" placeholder="Briefly write about your foreign languages" id="floatingTextarea2" style="height: 100px" name="intro" ></textarea>                                {% endcomment %}
+                            {{ form.languages }}
+                        </div>
+                      </div>
+
+                      <div class=" col-sm-6 d-flex flex-row align-items-center">
+                        <div class="form-outline flex-fill mb-0">
+                            <label for="">Skills and Certification</label>
+                            {% comment %} <textarea class="form-control" placeholder="Briefly write about your skills and certifications" id="floatingTextarea2" style="height: 100px" name="intro" ></textarea>                                {% endcomment %}
+                            {{ form.skill }}
+                        </div>
+                      </div>                                                     
+                    </div>
+          
+                    <hr class="my-4">
+                    
+                    <h4 class="mb-3">Contact</h4>
+                    <div class="row g-3">
+                      <div class="col-sm-4">
+                        <label for="email" class="form-label">Email <span class="text-body-secondary"></span></label>
+                        {% comment %} <input type="email" class="form-control" id="email" placeholder="you@example.com"> {% endcomment %}
+                        {{ form.mail }}
+                        <div class="invalid-feedback">
+                          Please enter a valid email address for further contact.
+                        </div>
+                      </div>
+
+                      <div class="col-sm-3">
+                        <label for="number" class="form-label">Phone number <span class="text-body-secondary">(Optional)</span></label>
+                        {% comment %} <input type="number" class="form-control" id="phone-number" placeholder="0123456789"> {% endcomment %}
+                        {{ form.phone }}
+                      </div>
+                    </div>
+
+                    <hr class="my-4">
+                    <div class="d-grid gap-2 d-md-flex col-6 mx-auto">
+                      <a type="button" class="btn btn-secondary btn-lg col-sm-6" href="{% url 'home' %}">Return to home</a>
+                      <button type="submit" class="btn btn-primary btn-lg col-sm-6" >Send Application</button>
+                    </div>
+                      
+                  </form>
+                  
+            </div>
+        </main>
+    </div>
+    
+    <script src="" async defer></script>
+  </body>
+</html>
+
+
+{% endblock main-content%}

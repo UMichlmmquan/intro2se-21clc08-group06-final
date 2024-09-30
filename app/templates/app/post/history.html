@@ -1,0 +1,85 @@
+{% extends 'app/base.html'%}
+{% load static %}
+
+
+{% block main-content %}
+
+<body class = "bg-body-tertiary">
+    <div class="py-5 text-center">
+        <h2>MY HISTORY</h2>
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="col-lg-8 col-xl-8">
+            <div class="table-responsive small">    
+                <table class="table table-striped table-sm">
+                    {% if application_history %}
+                        <thead> <!--Dòng này là cái header-->
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Company name</th>
+                                <th scope="col">Job</th>
+                                <th scope="col">Applied time</th>
+                                <th scope="col" class="text-center">Status</th>
+                                <th scope="col"></th>
+                                <th scope="col">Messages</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider"> <!--Nội dung của từng cột-->
+                            {% for application in application_history %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ application.company_name }}</td>
+                                <td>{{ application.job_applied }}</td>
+                                <td>{{ application.applied_time }}</td>
+                                <td class="{% if application.status_JF == 'PENDING' %}text-center fw-bold{% elif application.status_JF == 'ACCEPTED' %}table-success text-center text-success fw-bold{% else %}table-danger text-center text-danger fw-bold{% endif %}">
+                                    {{ application.status_JF }}
+                                </td>
+                                <td>
+                                    {% if application.status_JF == 'PENDING' %}
+                                        <form method="post" action="{% url 'cancel_application' application.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="mx-5 btn btn-secondary btn-sm col-sm-25">Cancel</button>
+                                        </form>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button type="submit" class="mx-5 btn btn-primary btn-sm col-sm-25 ms-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">View message</button>
+                                </td>
+                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Message from Company</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">                            
+                                                {% if application.status_JF == 'PENDING' %}
+                                                    PENDING
+                                                {% elif application.status_JF == 'ACCEPTED' %}
+                                                    {{ application.approve }}
+                                                {% else %}
+                                                    {{ application.deny }}
+                                                {% endif %}
+                                            </div>
+            
+                                            <div class="modal-footer">   
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    {% else %}
+                        <p class="text-center fw-bold "><h3>No application history found.</h3></p>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock main-content %}
+

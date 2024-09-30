@@ -1,0 +1,147 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block main-content %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <section style="background-color: #eee;">
+
+      <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-10 col-sm-12 text-center">
+                <h1 class="display-10">CREATING POST</h1>
+            </div>
+        </div>
+    </div>
+
+
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-12 col-xl-11">
+                    <div class="card text-black" style="border-radius: 25px;">
+                        <div class="card-body p-md-5">
+                            <div class="row justify-content-center">
+                               
+                                    <div class="text-center fw-bold">
+                                        {% if messages %}
+                                            {% for message in messages %}
+                                                <div class="alert alert-success"> 
+                                                    {{ message }}
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    <form class="mx-1 mx-md-4" method="POST" action="" enctype="multipart/form-data">
+                                        {% csrf_token %}
+
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <label for="inputPicURL" class="form-label">Picture : (For best quality and performance, please upload 400px x 400px image) : </label>
+                                                <br>{{ form.pic_url }}</br>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <label for="inputCaption" class="form-label">Caption:</label>
+                                                {{ form.caption }}
+                                            </div>
+
+                                             <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <label for="inputcontact" class="form-label">Contact:</label>
+                                                {{ form.contact }}
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <label for="inputAddress" class="form-label">Address</label>
+                                                {{ form.address }}
+                                            </div>
+                                        </div>
+                                        
+
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <label for="inputJob" class="form-label">Job</label>
+                                                {{ form.job }}
+                                            </div>
+                                            
+                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <label for="inputHour" class="form-label">Hour</label>
+                                                {{ form.hour }}
+                                            </div>
+                                        </div>
+      
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <label for="inputDescription" class="form-label">Job description</label>
+                                                {{ form.description }}
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                           
+                                        </div>
+
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline mb-0">
+                                                <label for="inputSalary" class="form-label">Salary</label>
+                                                {{ form.salary }}
+                                            </div>
+                                            <div class="form-outline mx-5 mb-0">
+                                                <label for="inputJob" class="form-label">Field</label>
+                                                {{ form.field }}
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <label for="inputAprove" class="form-label">Approve message</label>
+                                                {% comment %} <textarea class="form-control" placeholder="Message when approve applicants" id="inputDescription" style="height: 100px" name="approve"></textarea> {% endcomment %}
+                                                {{ form.approve }}
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <label for="inputDeny" class="form-label">Deny message</label>
+                                                {% comment %} <textarea class="form-control" placeholder="Message when deny applicants" id="inputDescription" style="height: 100px" name="deny"></textarea> {% endcomment %}
+                                                {{ form.deny }}
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                            <button type="submit" class="btn btn-primary btn-lg">POST</button>
+                                        </div>
+                                    </form>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="" async defer></script>
+</body>
+</html>
+{% endblock main-content %}

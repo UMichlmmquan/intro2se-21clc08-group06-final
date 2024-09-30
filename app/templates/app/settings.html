@@ -1,0 +1,124 @@
+{% extends 'app/base.html'%}
+{% load static %}
+
+{% block main-content %}
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+      <div class="container">
+        <div class="row justify-content-center mt-5 mb-4 border-bottom">
+            <div class="col-md-10 col-sm-12 text-center">
+                <h1 class="display-10">SETTINGS</h1>
+            </div>
+        </div>
+      </div>
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                  Password
+                </button>
+              </h2>
+              <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <form class="row g-3 align-items-center" action="" method='POST' id='ChangePassword'>
+                      <div class="text-center fw-bold" role="alert">
+                        {% if messages %}
+                          {% for message in messages %}
+                            {% if message.extra_tags == 'changepassword' %}
+                              <div class="alert alert-danger" role="alert">
+                                {{ message }}
+                              </div>
+                            {% endif %}
+                          {% endfor %}
+                        {% endif%}
+                      </div>
+                        {% csrf_token %}
+                        <div class="mx-auto mb-3 w-75 p-1">
+                            <label for="inputOldPassword" class="form-label">Old Password</label>
+                            <input type="password" class="form-control" id="inputPassword" placeholder = "Type old password" name="old_pass">
+                        </div>
+                    
+                        <div class="mx-auto mb-3 w-75 p-1">
+                            <label for="inputNewPassword" class="form-label">New Password</label>
+                            <input type="password" class="form-control" id="inputPassword" placeholder = "Type new password" name = "pass">
+                        </div>
+                    
+                        <div class="mx-auto mb-3 w-75 p-1">
+                            <label for="inputConfirmNewPassword" class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-control" id="inputPassword" placeholder = "Confirm new password" name ="rpass">
+                        </div>
+                        <br>
+                          <div class="mx-auto mt-2 p-1 text-center" style="width:75%">
+                              <button type="submit" class="btn btn-primary" name = "Security" value = "ChangePassword">Change password</button>
+                          </div>
+                        </br>
+                    </form>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    Account
+                  </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">
+                    </div>
+                    <!-- Button trigger modal -->
+                    <div class="container text-center">
+                      <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        Delete Account
+                      </button>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Are you sure you want to delete your account?</h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            This will delete your account permanently and cannot be undone.
+                          </div>
+                          <div class="modal-footer">
+                            <form class ="row g-3 align-items-center" action = "" method = 'POST'>
+                              <div class="text-center fw-bold">
+                                {% if messages %}
+                                  {% for message in messages %}
+                                    {% if message.extra_tags == 'deleteaccount' %}
+                                      <div class="alert alert-danger" role="alert">
+                                        {{ message }}
+                                      </div>
+                                    {% endif %}
+                                  {% endfor %}
+                                {% endif %}
+                              </div>
+                              {% csrf_token %}
+                                <label for="inputConfirmNewPassword" class="form-label">Type your password to delete the account.</label>
+                                <input type="password" class="form-control" id="inputPassword" placeholder = "Type your password" name ="dpass"></input>
+                              <button type="submit" class="btn btn-danger" name = "Security" value = "DeleteAccount">I want to Delete</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>  
+                  </div>
+                </div>
+              </div>
+        </div>
+        
+        <script src="" async defer></script>
+    </body>
+</html>
+{% endblock main-content %}

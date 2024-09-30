@@ -1,0 +1,194 @@
+{% extends 'app/base.html'%}
+{% load static %}
+
+{% block main-content %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+  </head>
+  
+  <body class = "bg-body-tertiary">
+    <div class = "container">
+        <main>
+            <div class="py-5 text-center">
+                <img class="d-block mx-auto mb-4" src="{% static 'app/image/apply_icon.png' %}" alt="" width="200" height="200">
+                <h2>CV FORM</h2>
+            </div>
+            
+
+
+            <div class="container h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-lg-12 col-xl-11">
+                        <div class="card text-black" style="border-radius: 25px;">
+                            <div class="card-body p-md-5">
+                                <div class="row justify-content-left">
+                                    <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                                        <div class="text-left fw-bold">
+            
+              {% if messages %}
+                  {% for message in messages %}
+                      <div>{{ message }}</div>
+                  {% endfor %}
+              {% endif %}
+            </div>
+
+            
+            
+           
+
+            <div class="d-flex flex-row align-items-center mb-2 details_of_entry">
+                <div class="w-50">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <label for="firstName" class="form-label">Full name :</label>
+                </div>
+                <div class="w-50">
+                    <p class="form-control border-0" readonly>{{ cv.full_name }}</p>
+                </div>
+            </div>
+            
+            <div class="d-flex flex-row align-items-center mb-2 details_of_entry">
+                <div class="w-50">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <label for="lastName" class="form-label">Gender :</label>
+                </div>
+                <div class="w-50">
+                    <p class="form-control border-0" readonly>{{ cv.gender }}</p>
+                </div>
+            </div>
+            
+            <div class="d-flex flex-row align-items-center mb-2 details_of_entry">
+                <div class="w-50">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <label for="address" class="form-label">Address :</label>
+                </div>
+                <div class="w-50">
+                    <p class="form-control border-0" readonly>{{ cv.address }}</p>
+                </div>
+            </div>
+            
+            <div class="d-flex flex-row align-items-center mb-2 details_of_entry">
+                <div class="w-50">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <label for="lastName" class="form-label">DOB :</label>
+                </div>
+                <div class="w-50">
+                    <p class="form-control border-0" readonly>{{ cv.date_of_birth }}</p>
+                </div>
+            </div>
+            
+            <div class="d-flex flex-row align-items-center mb-2 details_of_entry">
+                <div class="w-50">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <label for="" class="form-label">Experience :</label>
+                </div>
+                <div class="w-50">
+                    <p class="form-control border-0" readonly>{{ cv.experience }}</p>
+                </div>
+            </div>
+            
+            <div class="d-flex flex-row align-items-center mb-2 details_of_entry">
+                <div class="w-50">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <label for="" class="form-label">Short introduction :</label>
+                </div>
+                <div class="w-50">
+                    <p class="form-control border-0" readonly>{{ cv.introduction }}</p>
+                </div>
+            </div>
+            
+            <div class="d-flex flex-row align-items-center mb-2 details_of_entry">
+                <div class="w-50">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <label for="" class="form-label">Education :</label>
+                </div>
+                <div class="w-50">
+                    <p class="form-control border-0" readonly>{{ cv.education }}</p>
+                </div>
+            </div>
+            
+            <div class="d-flex flex-row align-items-center mb-2 details_of_entry">
+                <div class="w-50">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <label for="" class="form-label">Interests :</label>
+                </div>
+                <div class="w-50">
+                    <p class="form-control border-0" readonly>{{ cv.interest }}</p>
+                </div>
+            </div>
+            
+            <div class="d-flex flex-row align-items-center mb-2 details_of_entry">
+                <div class="w-50">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <label for="" class="form-label">Foreign Languages :</label>
+                </div>
+                <div class="w-50">
+                    <p class="form-control border-0" readonly>{{ cv.languages }}</p>
+                </div>
+            </div>
+            
+            <div class="d-flex flex-row align-items-center mb-2 details_of_entry">
+                <div class="w-50">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <label for="" class="form-label">Skills and Certification :</label>
+                </div>
+                <div class="w-50">
+                    <p class="form-control border-0" readonly>{{ cv.skill }}</p>
+                </div>
+            </div>
+            
+            <div class="d-flex flex-row align-items-center mb-2 details_of_entry">
+                <div class="w-50">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <label for="email">Email :</label>
+                </div>
+                <div class="w-50">
+                    <p class="form-control border-0" readonly>{{ cv.mail }}</p>
+                </div>
+            </div>
+            
+            <div class="d-flex flex-row align-items-center mb-2 details_of_entry">
+                <div class="w-50">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <label for="number" class="form-label">Phone number :</label>
+                </div>
+                <div class="w-50">
+                    <p class="form-control border-0" readonly>{{ cv.phone }}</p>
+                </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            
+                <form class="mx-1 mx-md-4" method="POST" action="">
+                    {% csrf_token %}
+                    <hr class="my-4">
+                    <div class=" gap-3 d-md-flex col-6 justify-content-center mx-auto">
+                        <button type="submit" name="deny" class="btn btn-danger btn-lg col-sm-6">DENY</button>
+                        <button type="submit" name="approve" class="btn btn-success btn-lg col-sm-6">APPROVE</button>
+                        {% if db.highlight %}
+                        <button type="submit" name="highlight" class="btn btn-secondary text-center fw-bold  btn-lg col-sm-6">UNHIGHLIGHT</button>
+                        {% else %}
+                        <button type="submit" name="highlight" class="btn btn-warning text-center fw-bold btn-lg col-sm-6">HIGHLIGHT</button>
+                        {% endif %}
+                    </div>
+                      
+                </form>
+                  
+            </div>
+        </main>
+    </div>
+    
+    <script src="" async defer></script>
+  </body>
+</html>
+
+
+{% endblock main-content%}

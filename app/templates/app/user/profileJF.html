@@ -1,0 +1,180 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block main-content %}
+<!-- Message display code -->
+{% if messages %}
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-12">
+      {% for message in messages %}
+      {%if message.extra_tags == 'update'%}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {%endif%}
+      {% if message.extra_tags == 'report' %}
+            <div class="alert alert-danger" role="alert">
+                  {{ message }}
+            </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="">
+  <style>
+    .form-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      font-weight: bold;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="date"],
+    .form-group textarea {
+      width: 100%;
+      padding: 8px;
+    }
+    .form-group .error-message {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <section style="background-color: #eee;">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-12 col-xl-11">
+          <div class="card text-black" style="border-radius: 25px;">
+            <div class="card-body p-md-5">
+              <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                  <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">{{user2.username}}</p>
+                  <div class="form-container">
+                    <form method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <fieldset class="form-group">
+                        <legend class="border-bottom mb-4"><b>Profile Info</b></legend>
+                        {%if user2 == user%}
+                        <div class="row mb-3">
+                          <div class="col">
+                            <label for="full-name" class="form-label">Full Name</label>
+                            <input type="text" id="full-name" name="full_name" value="{{ jf.full_name }}" class="form-control" required>
+                          </div>
+                          <div class="col">
+                            <label for="gender" class="form-label">Gender</label>
+                            <select id="gender" name="gender" class="form-control" required>
+                              <option value="">Choose your Gender</option>
+                              <option value="Male" {% if jf.gender == 'Male' %}selected{% endif %}>Male</option>
+                              <option value="Female" {% if jf.gender == 'Female' %}selected{% endif %}>Female</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <label for="address" class="form-label">Address</label>
+                          <textarea id="address" name="address" rows="3" class="form-control" required>{{ jf.address }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="city" class="form-label">City</label>
+                            <select id="city" name="city" class="form-control" required>
+                                <option value="">{{jf.city}}</option>
+                                {% for city, city_name in city_choices %}
+                                    <option value="{{ city }}">{{ city_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                          <label for="date-of-birth" class="form-label">Date of Birth</label>
+                          <input type="date" id="date-of-birth" name="date_of_birth" value="{{ jf.date_of_birth }}" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                          <label for="introduction" class="form-label">Introduction</label>
+                          <textarea id="introduction" name="introduction" rows="5" class="form-control" required>{{ jf.introduction }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                          <button class="btn btn-outline-info" type="submit" name="pf" value="update">Update</button>
+                        </div>
+
+                        {%else%}
+                        <!-- Read-only fields for other users' profiles -->
+                        <div class="mb-3">
+                          <label for="full-name" class="form-label">Full Name</label>
+                          <input type="text" id="full-name" name="full_name" readonly value="{{ jf.full_name }}" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                          <label for="gender" class="form-label">Gender</label>
+                          <select id="gender" name="gender" class="form-control" required readonly>
+                            <option value="">Choose your Gender</option>
+                            <option value="Male" {% if jf.gender == 'Male' %}selected{% endif %}>Male</option>
+                            <option value="Female" {% if jf.gender == 'Female' %}selected{% endif %}>Female</option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <label for="address" class="form-label">Address</label>
+                          <textarea id="address" name="address" rows="3" class="form-control" required readonly>{{ jf.address }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                          <label for="city" class="form-label">City</label>
+                          <input type="text" id="city" name="city" readonly value="{{ jf.city }}" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                          <label for="date-of-birth" class="form-label">Date of Birth</label>
+                          <input type="date" id="date-of-birth" name="date_of_birth" readonly value="{{ jf.date_of_birth }}" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                          <label for="introduction" class="form-label">Introduction</label>
+                          <textarea id="introduction" name="introduction" rows="5" class="form-control" required readonly>{{ jf.introduction }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                          <button type="button" class="btn btn-danger float-end" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Report</button>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Briefly explain why you report this user</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">                            
+                                <textarea type="text" class="form-control mt-3" placeholder="Type here" id="floatingTextarea2" name='rp_content'></textarea>
+                              </div>
+                              <div class="modal-footer"> 
+                                {% csrf_token %}      
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-danger" name="pf" value="report">Report</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>  
+
+                        {%endif%}
+                      </fieldset>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
+{% endblock main-content %}
